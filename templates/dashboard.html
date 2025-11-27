@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Панель управления</h2>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Добро пожаловать, {{ session.full_name }}!</h5>
+                <p class="card-text">Ваша роль: 
+                    {% if session.role == 'admin' %}
+                        <span class="badge bg-danger">Администратор</span>
+                    {% elif session.role == 'teacher' %}
+                        <span class="badge bg-warning">Преподаватель</span>
+                    {% else %}
+                        <span class="badge bg-info">Студент</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            {% if session.role in ['admin', 'teacher'] %}
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Студенты</h5>
+                        <p class="card-text">Управление списком студентов</p>
+                        <a href="{{ url_for('students') }}" class="btn btn-light">Перейти</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Оценки</h5>
+                        <p class="card-text">Просмотр оценок</p>
+                        <a href="{{ url_for('grades') }}" class="btn btn-light">Перейти</a>
+                    </div>
+                </div>
+            </div>
+
+            {% if session.role in ['admin', 'teacher'] %}
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title">Добавить оценку</h5>
+                        <p class="card-text">Добавление новой оценки</p>
+                        <a href="{{ url_for('add_grade') }}" class="btn btn-light">Перейти</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if session.role == 'admin' %}
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h5 class="card-title">Регистрация</h5>
+                        <p class="card-text">Добавление новых пользователей</p>
+                        <a href="{{ url_for('register') }}" class="btn btn-light">Перейти</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">Предметы</h5>
+                        <p class="card-text">Список учебных предметов</p>
+                        <a href="{{ url_for('subjects') }}" class="btn btn-light">Перейти</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Новые карточки для статистики двоек -->
+            {% if session.role in ['admin', 'teacher'] %}
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-danger">
+                    <div class="card-body">
+                        <h5 class="card-title">Статистика двоек</h5>
+                        <p class="card-text">Подсчет неудовлетворительных оценок</p>
+                        <a href="{{ url_for('failing_students') }}" class="btn btn-light">Перейти</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="col-md-4 mb-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title">Неудовлетворительные оценки</h5>
+                        <p class="card-text">Просмотр двоек по четвертям</p>
+                        <a href="{{ url_for('student_fails') }}" class="btn btn-light">Перейти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

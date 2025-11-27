@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Оценки</h2>
+
+{% if session.role in ['admin', 'teacher'] %}
+<div class="mb-3">
+    <a href="{{ url_for('add_grade') }}" class="btn btn-success">Добавить оценку</a>
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    {% if session.role in ['admin', 'teacher'] %}
+                    <th>Студент</th>
+                    {% endif %}
+                    <th>Предмет</th>
+                    <th>Оценка</th>
+                    <th>Дата</th>
+                    <th>Четверть</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grade in grades %}
+                <tr>
+                    {% if session.role in ['admin', 'teacher'] %}
+                    <td>{{ grade.student_name }}</td>
+                    {% endif %}
+                    <td>{{ grade.subject_name }}</td>
+                    <td>
+                        <span class="badge bg-{% if grade.grade >= 4 %}success{% elif grade.grade == 3 %}warning{% else %}danger{% endif %}">
+                            {{ grade.grade }}
+                        </span>
+                    </td>
+                    <td>{{ grade.date }}</td>
+                    <td>{{ grade.quarter }} четверть</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

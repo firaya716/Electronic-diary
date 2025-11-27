@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2>Добавить оценку</h2>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="student_id" class="form-label">Студент:</label>
+                        <select class="form-select" id="student_id" name="student_id" required>
+                            <option value="">Выберите студента</option>
+                            {% for student in students %}
+                            <option value="{{ student.id }}">{{ student.full_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="subject_id" class="form-label">Предмет:</label>
+                        <select class="form-select" id="subject_id" name="subject_id" required>
+                            <option value="">Выберите предмет</option>
+                            {% for subject in subjects %}
+                            <option value="{{ subject.id }}">{{ subject.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="grade" class="form-label">Оценка:</label>
+                        <select class="form-select" id="grade" name="grade" required>
+                            <option value="">Выберите оценку</option>
+                            <option value="5">5 (Отлично)</option>
+                            <option value="4">4 (Хорошо)</option>
+                            <option value="3">3 (Удовлетворительно)</option>
+                            <option value="2">2 (Неудовлетворительно)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Дата:</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quarter" class="form-label">Четверть:</label>
+                        <select class="form-select" id="quarter" name="quarter" required>
+                            <option value="1">1 четверть</option>
+                            <option value="2">2 четверть</option>
+                            <option value="3">3 четверть</option>
+                            <option value="4">4 четверть</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">Добавить оценку</button>
+                    <a href="{{ url_for('grades') }}" class="btn btn-secondary">Назад к оценкам</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
